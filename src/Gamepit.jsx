@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { randomIntFromInterval } from "./Math";
-function Gamepit() {
+function Gamepit(props) {
   const rows = 10;
   const cols = 20;
   const grid = new Array(rows).fill(0).map((row) => new Array(cols).fill(0));
@@ -14,8 +14,12 @@ function Gamepit() {
       rowIndex === diamondPosition.row && cellIndex === diamondPosition.col
     );
   };
-  //   const [customclass, SetCustomClass] = useState("cell");
+
+  // const [AllSnakes, SetAllSnakes] = useState([]);
+
   const handleDiamondCellHover = () => {
+    props.SetScore((preScore) => preScore + 10);
+    props.SetLevel((preLevel) => preLevel + 1);
     const preRow = diamondPosition.row;
     const preCol = diamondPosition.col;
     let newRow = 0;
@@ -168,13 +172,25 @@ function Gamepit() {
             <div
               key={cellIndex}
               className={`cell ${
-                isDiamondCell(rowIndex, cellIndex) ? "diamondCell" : ""
-              } ${isSnakeCell(rowIndex, cellIndex) ? "snakeCell" : ""} ${
-                isSecondSnakeCell(rowIndex, cellIndex) ? "secondSnakeCell" : ""
+                props.isStart && isDiamondCell(rowIndex, cellIndex)
+                  ? "diamondCell"
+                  : ""
               } ${
-                isThirdSnakeCell(rowIndex, cellIndex) ? "thirdSnakeCell" : ""
+                props.isStart && isSnakeCell(rowIndex, cellIndex)
+                  ? "snakeCell"
+                  : ""
               } ${
-                isFourthSnakeCell(rowIndex, cellIndex) ? "fourthSnakeCell" : ""
+                props.isStart && isSecondSnakeCell(rowIndex, cellIndex)
+                  ? "secondSnakeCell"
+                  : ""
+              } ${
+                props.isStart && isThirdSnakeCell(rowIndex, cellIndex)
+                  ? "thirdSnakeCell"
+                  : ""
+              } ${
+                props.isStart && isFourthSnakeCell(rowIndex, cellIndex)
+                  ? "fourthSnakeCell"
+                  : ""
               }`}
               onMouseEnter={() => {
                 if (isDiamondCell(rowIndex, cellIndex)) {
