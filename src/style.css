@@ -34,6 +34,10 @@ body {
   background-color: blue;
 }
 
+.snakeCell {
+  background-color: red;
+}
+
 .cell:hover {
   background-color: greenyellow;
 }
