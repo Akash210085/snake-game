@@ -164,6 +164,20 @@ function Gamepit(props) {
     return () => clearInterval(interval);
   });
 
+  function conditionChecker(rowIndex, cellIndex) {
+    const rowdirection = [1, -1, 0, 0, 1, -1, 1, -1, 0];
+    const coldirection = [0, 0, -1, 1, 1, 1, -1, -1, 0];
+    for (let i = 0; i < 9; i++) {
+      const newRowIndex = rowIndex + rowdirection[i];
+      const newColIndex = cellIndex + coldirection[i];
+      if (isSnakeCell(newRowIndex, newColIndex)) return true;
+      else if (isSecondSnakeCell(newRowIndex, newColIndex)) return true;
+      else if (isThirdSnakeCell(newRowIndex, newColIndex)) return true;
+      else if (isFourthSnakeCell(newRowIndex, newColIndex)) return true;
+    }
+    return false;
+  }
+
   return (
     <div className="board">
       {grid.map((row, rowIndex) => (
@@ -195,6 +209,9 @@ function Gamepit(props) {
               onMouseEnter={() => {
                 if (isDiamondCell(rowIndex, cellIndex)) {
                   handleDiamondCellHover();
+                }
+                if (conditionChecker(rowIndex, cellIndex)) {
+                  props.SetScore((preScore) => preScore - 10);
                 }
               }}
             ></div>
