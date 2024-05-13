@@ -38,6 +38,18 @@ body {
   background-color: red;
 }
 
+.secondSnakeCell {
+  background-color: red;
+}
+
+.thirdSnakeCell {
+  background-color: red;
+}
+
+.fourthSnakeCell {
+  background-color: red;
+}
+
 .cell:hover {
   background-color: greenyellow;
 }

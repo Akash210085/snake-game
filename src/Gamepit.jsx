@@ -36,13 +36,13 @@ function Gamepit() {
   const generateRandomSnakePosition = () => {
     let initialSnakePosition;
     do {
-      let randomRow = randomIntFromInterval(0, rows - 1);
-      let randomCol = randomIntFromInterval(0, cols - 1);
+      let randomRow = randomIntFromInterval(3, rows - 4);
+      let randomCol = randomIntFromInterval(3, cols - 4);
       initialSnakePosition = {
         row: randomRow,
         col: randomCol,
-        pRow: randomRow + 1,
-        pCol: randomCol,
+        pRow: randomRow,
+        pCol: randomCol - 1,
       };
     } while (
       initialSnakePosition.row === diamondPosition.row &&
@@ -57,6 +57,48 @@ function Gamepit() {
 
   const isSnakeCell = (rowIndex, cellIndex) => {
     return rowIndex === snakePosition.row && cellIndex === snakePosition.col;
+  };
+
+  const [SecondSnakePosition, SetSecondSnakePostion] = useState({
+    row: snakePosition.pRow,
+    col: snakePosition.pCol,
+    pRow: snakePosition.row,
+    pCol: snakePosition.col - 1,
+  });
+
+  const [ThirdSnakePosition, SetThirdSnakePostion] = useState({
+    row: SecondSnakePosition.pRow,
+    col: SecondSnakePosition.pCol,
+    pRow: SecondSnakePosition.row,
+    pCol: SecondSnakePosition.col - 1,
+  });
+
+  const [FourthSnakePosition, SetFourthSnakePostion] = useState({
+    row: ThirdSnakePosition.pRow,
+    col: ThirdSnakePosition.pCol,
+    pRow: ThirdSnakePosition.row,
+    pCol: ThirdSnakePosition.col - 1,
+  });
+
+  const isSecondSnakeCell = (rowIndex, cellIndex) => {
+    return (
+      rowIndex === SecondSnakePosition.row &&
+      cellIndex === SecondSnakePosition.col
+    );
+  };
+
+  const isThirdSnakeCell = (rowIndex, cellIndex) => {
+    return (
+      rowIndex === ThirdSnakePosition.row &&
+      cellIndex === ThirdSnakePosition.col
+    );
+  };
+
+  const isFourthSnakeCell = (rowIndex, cellIndex) => {
+    return (
+      rowIndex === FourthSnakePosition.row &&
+      cellIndex === FourthSnakePosition.col
+    );
   };
 
   const moveSnake = () => {
@@ -88,13 +130,32 @@ function Gamepit() {
         pCol: preCol,
       };
     });
+    SetFourthSnakePostion({
+      row: ThirdSnakePosition.row,
+      col: ThirdSnakePosition.col,
+      pRow: FourthSnakePosition.row,
+      pCol: FourthSnakePosition.col,
+    });
+    SetThirdSnakePostion({
+      row: SecondSnakePosition.row,
+      col: SecondSnakePosition.col,
+      pRow: ThirdSnakePosition.row,
+      pCol: ThirdSnakePosition.col,
+    });
+    SetSecondSnakePostion({
+      row: preRow,
+      col: preCol,
+      pRow: prepRow,
+      pCol: prepCol,
+    });
   };
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Move the snake every 1 second
     const interval = setInterval(() => {
       moveSnake();
-    }, 1000);
+    }, 500);
 
     return () => clearInterval(interval);
   });
@@ -108,7 +169,13 @@ function Gamepit() {
               key={cellIndex}
               className={`cell ${
                 isDiamondCell(rowIndex, cellIndex) ? "diamondCell" : ""
-              } ${isSnakeCell(rowIndex, cellIndex) ? "snakeCell" : ""}`}
+              } ${isSnakeCell(rowIndex, cellIndex) ? "snakeCell" : ""} ${
+                isSecondSnakeCell(rowIndex, cellIndex) ? "secondSnakeCell" : ""
+              } ${
+                isThirdSnakeCell(rowIndex, cellIndex) ? "thirdSnakeCell" : ""
+              } ${
+                isFourthSnakeCell(rowIndex, cellIndex) ? "fourthSnakeCell" : ""
+              }`}
               onMouseEnter={() => {
                 if (isDiamondCell(rowIndex, cellIndex)) {
                   handleDiamondCellHover();
