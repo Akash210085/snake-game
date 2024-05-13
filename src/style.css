@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #282c34;
+}
+
+.app {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.board {
+  background-color: black;
+  outline: 2px solid #fff;
+}
+
+.row {
+  height: 50px;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  outline: 1px solid #fff;
+  display: inline-block;
+}
+
+.diamondCell {
+  background-color: blue;
+}
+
+.cell:hover {
+  background-color: greenyellow;
+}
+
+.cell-green {
+  background-color: green;
+}
+
+.cell-red {
+  background-color: red;
+}
+
+.cell-purple {
+  background-color: purple;
+}
+
+header,
+footer {
+  display: flex;
+}
+
+header h1 {
+  font-size: 30px;
+}
+header .score {
+  margin-right: 100px;
+}
+
+header .level {
+  margin-left: 100px;
+}
+
+footer {
+  padding: 20px 16px;
+  font-size: 20px;
+}
+
+footer .start {
+  margin-right: 100px;
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  font-size: 20px;
+  border-width: 4px;
+}
+
+footer .stop {
+  margin-left: 100px;
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  font-size: 20px;
+  border-width: 4px;
+}
