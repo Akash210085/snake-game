@@ -18,8 +18,8 @@ function Gamepit(props) {
   // const [AllSnakes, SetAllSnakes] = useState([]);
 
   const handleDiamondCellHover = () => {
-    props.SetScore((preScore) => preScore + 10);
-    props.SetLevel((preLevel) => preLevel + 1);
+    props.isStart && props.SetScore((preScore) => preScore + 10);
+    props.isStart && props.SetLevel((preLevel) => preLevel + 1);
     const preRow = diamondPosition.row;
     const preCol = diamondPosition.col;
     let newRow = 0;
@@ -211,7 +211,7 @@ function Gamepit(props) {
                   handleDiamondCellHover();
                 }
                 if (conditionChecker(rowIndex, cellIndex)) {
-                  props.SetScore((preScore) => preScore - 10);
+                  props.isStart && props.SetScore((preScore) => preScore - 10);
                 }
               }}
             ></div>
