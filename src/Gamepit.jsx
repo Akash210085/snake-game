@@ -16,29 +16,39 @@ function Gamepit() {
   };
   //   const [customclass, SetCustomClass] = useState("cell");
   const handleDiamondCellHover = () => {
+    const preRow = diamondPosition.row;
+    const preCol = diamondPosition.col;
+    let newRow = 0;
+    let newCol = 0;
     do {
-      SetDiamondPosition({
-        row: randomIntFromInterval(0, rows - 1),
-        col: randomIntFromInterval(0, cols - 1),
-      });
+      newRow = randomIntFromInterval(0, rows - 1);
+      newCol = randomIntFromInterval(0, cols - 1);
     } while (
-      diamondPosition.row === snakePosition.row ||
-      diamondPosition.col === snakePosition.col
+      (newRow === snakePosition.row && newCol === snakePosition.col) ||
+      (newCol === preCol && newRow === preRow)
     );
+    SetDiamondPosition({
+      row: newRow,
+      col: newCol,
+    });
   };
 
   const generateRandomSnakePosition = () => {
-    let snakePosition;
+    let initialSnakePosition;
     do {
-      snakePosition = {
-        row: randomIntFromInterval(0, rows - 1),
-        col: randomIntFromInterval(0, cols - 1),
+      let randomRow = randomIntFromInterval(0, rows - 1);
+      let randomCol = randomIntFromInterval(0, cols - 1);
+      initialSnakePosition = {
+        row: randomRow,
+        col: randomCol,
+        pRow: randomRow + 1,
+        pCol: randomCol,
       };
     } while (
-      snakePosition.row === diamondPosition.row &&
-      snakePosition.col === diamondPosition.col
+      initialSnakePosition.row === diamondPosition.row &&
+      initialSnakePosition.col === diamondPosition.col
     );
-    return snakePosition;
+    return initialSnakePosition;
   };
 
   const [snakePosition, SetSnakePostion] = useState(
@@ -52,25 +62,32 @@ function Gamepit() {
   const moveSnake = () => {
     const preRow = snakePosition.row;
     const preCol = snakePosition.col;
+    const prepRow = snakePosition.pRow;
+    const prepCol = snakePosition.pCol;
+    let newRow = 0;
+    let newCol = 0;
+    const rowdirection = [1, -1, 0, 0];
+    const coldirection = [0, 0, 1, -1];
     do {
-      const rowdirection = [1, -1, 0, 0];
-      const coldirection = [0, 0, 1, -1];
       const randomNo = Math.floor(Math.random() * rowdirection.length);
-      SetSnakePostion((preValue) => {
-        return {
-          row: preValue.row + rowdirection[randomNo],
-          col: preValue.col + coldirection[randomNo],
-        };
-      });
+      newRow = preRow + rowdirection[randomNo];
+      newCol = preCol + coldirection[randomNo];
     } while (
-      snakePosition.row === diamondPosition.row ||
-      snakePosition.col === diamondPosition.col ||
-      snakePosition.row < 0 ||
-      snakePosition.col < 0 ||
-      snakePosition.row >= rows ||
-      snakePosition.col >= cols ||
-      (snakePosition.row === preRow && snakePosition.col === preCol)
+      (newRow === diamondPosition.row && newCol === diamondPosition.col) ||
+      newRow < 0 ||
+      newCol < 0 ||
+      newRow >= rows ||
+      newCol >= cols ||
+      (newRow === prepRow && newCol === prepCol)
     );
+    SetSnakePostion(() => {
+      return {
+        row: newRow,
+        col: newCol,
+        pRow: preRow,
+        pCol: preCol,
+      };
+    });
   };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
