@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/snake-game/static/css/main.d3db6e9e.css",
-    "main.js": "/snake-game/static/js/main.98842c16.js",
+    "main.js": "/snake-game/static/js/main.f0e7e0ca.js",
     "index.html": "/snake-game/index.html",
     "main.d3db6e9e.css.map": "/snake-game/static/css/main.d3db6e9e.css.map",
-    "main.98842c16.js.map": "/snake-game/static/js/main.98842c16.js.map"
+    "main.f0e7e0ca.js.map": "/snake-game/static/js/main.f0e7e0ca.js.map"
   },
   "entrypoints": [
     "static/css/main.d3db6e9e.css",
-    "static/js/main.98842c16.js"
+    "static/js/main.f0e7e0ca.js"
   ]
 }
