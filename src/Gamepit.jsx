@@ -206,10 +206,12 @@ function Gamepit(props) {
                   ? "fourthSnakeCell"
                   : ""
               }`}
-              onMouseEnter={() => {
+              onClick={() => {
                 if (isDiamondCell(rowIndex, cellIndex)) {
                   handleDiamondCellHover();
                 }
+              }}
+              onMouseOver={() => {
                 if (conditionChecker(rowIndex, cellIndex)) {
                   props.isStart && props.SetScore((preScore) => preScore - 10);
                 }
